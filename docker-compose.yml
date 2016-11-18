@@ -1,0 +1,26 @@
+# Host for Apache and laravel 
+#----------------------------------
+php:
+  image: cheezykins/laravel
+  container_name: laravelcurr
+  links:
+    - mysql
+  ports:
+    - "8083:80"
+  volumes:
+    - .:/var/www/html
+
+# MySQL Container #----------------------------------------
+mysql:
+  image: library/mysql:latest
+  container_name: laravelcurr-mysql
+  ports:
+    - "12006:3306"
+  expose:
+    - "3306"
+  volumes:
+    - ./_docker/data/mysql:/var/lib/mysql
+    - ./_docker/logs/mysql:/var/log/mysql
+    - ./_docker/config/mysql/unicode.cnf:/etc/mysql/conf.d/z_my.cnf
+  env_file:
+    - ./_docker/mysql.env
